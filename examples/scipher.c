@@ -20,9 +20,9 @@ static void list_sciphers(void)
 
 int main(int argc, char *argv[])
 {
-	char plaintext[1024], ciphertext[1024];
+	unsigned char plaintext[1024], ciphertext[1024];
 	int type;
-	char *key;
+	unsigned char *key;
 	size_t keylen, minkey, arglen;
 	CYFER_STREAM_CIPHER_CTX *ctx;
 	int enc = -1;
@@ -54,7 +54,7 @@ int main(int argc, char *argv[])
 	if (arglen < keylen) keylen = (minkey > arglen) ? minkey : arglen;
 	key = malloc(keylen);
 	memset(key, 0, keylen);
-	strncpy(key, argv[2], keylen);
+	strncpy((char *) key, argv[2], keylen);
 
 	/* Allocate and initialize context. Note that actual key length is supplied as
 	 * 4th argument. For ciphers that don't support variable key lengths, this value

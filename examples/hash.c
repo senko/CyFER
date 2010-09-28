@@ -36,7 +36,7 @@ static void print_result(char *type, unsigned char *result, size_t len)
  */
 int main(int argc, char *argv[])
 {
-	char tmp[1024];
+	unsigned char tmp[1024];
 	int type;
 	size_t len;
 	unsigned char *result;

@@ -46,8 +46,8 @@ static int generate_keys(char *pk, int size, char *pubfile, char *privfile)
 {
 	CYFER_PK_CTX *ctx;
 	FILE *fp;
-	int privlen, publen;
-	char *priv, *pub;
+	size_t privlen, publen;
+	unsigned char *priv, *pub;
 
 	/* Create context */
 	ctx = init_ctx(pk);
@@ -93,10 +93,10 @@ static int generate_keys(char *pk, int size, char *pubfile, char *privfile)
 static void encdec(char *pk, char *keyfile, char *infile, char *outfile, bool encrypt)
 {
 	FILE *fp, *in, *out;
-	char *key;
+	unsigned char *key;
 	int klen;
 	size_t in_len, out_len;
-	char *inbuf, *outbuf;
+	unsigned char *inbuf, *outbuf;
 	bool import;
 	int n;
 	CYFER_PK_CTX *ctx;

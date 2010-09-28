@@ -38,7 +38,7 @@ int main(int argc, char *argv[])
 {
 	int type, mode, n;
 	size_t keylen, mklen, arglen, mlen, len;
-	char *key, *plaintext, *ciphertext;
+	unsigned char *key, *plaintext, *ciphertext;
 	CYFER_BLOCK_CIPHER_CTX *ctx;
 	int enc = -1;
 
@@ -87,7 +87,7 @@ int main(int argc, char *argv[])
 	}
 	key = malloc(keylen);
 	memset(key, 0, keylen);
-	strncpy(key, argv[2], keylen);
+	strncpy((char *) key, argv[2], keylen);
 
 	/* Allocate and initialize context. Note that actual key length is supplied as
 	 * 3rd argument. For ciphers that don't support variable key lengths, this value
