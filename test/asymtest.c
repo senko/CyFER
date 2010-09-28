@@ -66,7 +66,7 @@ static int generic_encryption(int type)
 		CYFER_Pk_Export_Key(ctx, priv, pub);
 		CYFER_Pk_Finish(ctx);
 
-		memset(a, 0, pt_len); strcpy(a, "Forty-Two");
+		memset(a, 0, pt_len); strcpy((char *) a, "Forty-Two");
 
 		ctx = CYFER_Pk_Init(type);
 		CYFER_Pk_Import_Key(ctx, NULL, 0, pub, publen);
@@ -100,7 +100,7 @@ static int generic_signature(int type)
 		CYFER_Pk_Export_Key(ctx, priv, pub);
 		CYFER_Pk_Finish(ctx);
 
-		memset(a, 0, pt_len); strcpy(a, "Forty-Two");
+		memset(a, 0, pt_len); strcpy((char *) a, "Forty-Two");
 
 		ctx = CYFER_Pk_Init(type);
 		CYFER_Pk_Import_Key(ctx, priv, privlen, NULL, 0);

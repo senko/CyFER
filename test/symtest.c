@@ -1202,8 +1202,8 @@ void bcipher(int *nt, int *sc)
 
 		ok = 1;
 		for (j = 0; test_bcipher[i].tests[j].plain; j++) {
-			ctx = CYFER_BlockCipher_Init(type, test_bcipher[i].tests[j].key, test_bcipher[i].keylen, CYFER_MODE_ECB, NULL);
-			CYFER_BlockCipher_Encrypt(ctx, test_bcipher[i].tests[j].plain, tmp1);
+			ctx = CYFER_BlockCipher_Init(type, (unsigned char *) test_bcipher[i].tests[j].key, test_bcipher[i].keylen, CYFER_MODE_ECB, NULL);
+			CYFER_BlockCipher_Encrypt(ctx, (unsigned char *) test_bcipher[i].tests[j].plain, tmp1);
 			CYFER_BlockCipher_Decrypt(ctx, tmp1, tmp2);
 			CYFER_BlockCipher_Finish(ctx);
 
@@ -1243,11 +1243,11 @@ void scipher(int *nt, int *sc)
 
 		ok = 1;
 		for (j = 0; test_scipher[i].tests[j].plain; j++) {
-			ctx = CYFER_StreamCipher_Init(type, test_scipher[i].tests[j].key, test_scipher[i].keylen);
-			CYFER_StreamCipher_Encrypt(ctx, test_scipher[i].tests[j].plain, tmp1, mdlen);
+			ctx = CYFER_StreamCipher_Init(type, (unsigned char *) test_scipher[i].tests[j].key, test_scipher[i].keylen);
+			CYFER_StreamCipher_Encrypt(ctx, (unsigned char *) test_scipher[i].tests[j].plain, tmp1, mdlen);
 			CYFER_StreamCipher_Finish(ctx);
 
-			ctx = CYFER_StreamCipher_Init(type, test_scipher[i].tests[j].key, test_scipher[i].keylen);
+			ctx = CYFER_StreamCipher_Init(type, (unsigned char *) test_scipher[i].tests[j].key, test_scipher[i].keylen);
 			CYFER_StreamCipher_Decrypt(ctx, tmp1, tmp2, mdlen);
 			CYFER_StreamCipher_Finish(ctx);
 

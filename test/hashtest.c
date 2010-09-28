@@ -164,8 +164,8 @@ void hashtest(int *nt, int *sc)
 
 		ok = 1;
 		for (j = 0; test_data[i].tests[j].text; j++) {
-			data = test_data[i].tests[j].text;
-			CYFER_Hash(type, data, strlen(data), tmp);
+			data = (unsigned char *) test_data[i].tests[j].text;
+			CYFER_Hash(type, data, strlen((char *) data), tmp);
 
 			if (memcmp(test_data[i].tests[j].digest, tmp, mdlen)) {
 				ok = 0;
