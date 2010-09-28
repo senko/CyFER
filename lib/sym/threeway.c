@@ -46,7 +46,7 @@ static inline void mu(u32 *x)
 	x[2] = tmp;
 }
 
-static inline void gamma(u32 *x)
+static inline void mygamma(u32 *x)
 {
 	u32 tmp[3];
 
@@ -74,7 +74,7 @@ static inline void rho(u32 *x)
 {
 	theta(x);
 	pi_1(x);
-	gamma(x);
+	mygamma(x);
 	pi_2(x);
 }
 
