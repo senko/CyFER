@@ -13,7 +13,7 @@ CFLAGS = $(WARN) -I../include -I../../include @M64@ @CFLAGS@
 
 INSTALL_INCLUDES = include/cyfer/*.h
 
-SUBDIRS = lib test examples
+SUBDIRS = lib test examples python
 
 .PHONY: all clean distclean test install install_wrappers docs
 

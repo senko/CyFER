@@ -1,0 +1,27 @@
+cyfer-python 0.6 - Python language bindings for Cyfer library
+
+Installation
+------------
+
+To build, test and install the package run:
+	make
+	make test
+	make install
+
+Usage
+-----
+
+See the 'test.py' file for usage eaxmples.
+
+
+Author and Copyright
+--------------------
+
+Cyfer-python was written by Senko Rasic <senko@senko.net>.
+Visit http://software.senko.net/packages/cyfer/ for more
+information.
+
+You may use and/or distribute this software under the terms
+of the BSD license.
+
+
