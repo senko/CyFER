@@ -1,0 +1,29 @@
+CyFER - the cryptographic library
+=================================
+
+Cyfer is a portable low-level cryptographic library providing several
+implementations of message digest, block and stream cipher and public-key
+algorithms. The library is extremely modular, providing easy way to add or
+modify algorithm implementations, or even separating the particular algorithm
+from the library physically (suitable for embedded environments).
+
+The library design concept emphasises on simplicity and elegance (of
+both the algorithm implementations (if possible) and the support library
+code), not maximizing performance or minimizing memory footprint. The algorithm
+implementations are straightforward, so they can be used for educational
+purposes.
+
+*WARNING*: Cyfer is provided with best intent to be useful and secure, but
+with no warranty; it is not heavily tested and may contain numerous severe
+bugs, flaws and holes. Do not use this if you want any security. *You should be
+using tested, proven and certified cryptography implementation*, instead.
+
+Author of Cyfer is Senko Rasic <senko@senko.net>. Suggestions, bug
+reports and any other feedback (to the above mail address) is welcomed
+and appriciated.
+
+Cyfer is free software. You may use and/or distribute it under the
+terms of the BSD software license, see the file LICENSE for details.
+
+For more documentation, visit the doc/ subdirectory. The complete API reference
+documentation can be built using doxygen.
