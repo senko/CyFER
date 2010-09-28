@@ -1,0 +1,13 @@
+Package: cyfer
+Version: 0.6.0
+Architecture: @ARCH@
+Maintainer: Senko Rasic <senko@senko.net>
+Depends: libgmp (>= 4.1.0)
+Description: A low-level cryptographic library.
+ Cyfer is a portable cryptographic library providing several implementations
+ of message digest, block and stream cipher and public-key algorithms. The
+ library is extremely modular, providing easy way to add or modify algorithm
+ implementations, or even separating the particular algorithm from the
+ library physically (suitable for embedded environments). Cyfer doesn't
+ support PKI (Public-Key Infrastructure).
+

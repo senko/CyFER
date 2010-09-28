@@ -1,0 +1,24 @@
+[2004-09-26] - Cyfer 0.6.0
+	* moved wrappers to separate packages
+	* unbundled win32 support gmp library
+	* polished the documentation
+	* polished the build process and package creation
+
+[2004-09-15] - Cyfer 0.5.0
+	* finished the interface
+	* polished wrappers for PHP, Python, Perl, Java and C#
+	* many bugfixes
+	* new algorithm tests based on Cryptlib
+	* windows support
+	* doxygen-generated annotated reference
+	* worked on portability issues
+
+[2004-01-18] - Cyfer 0.4.*
+	* mostly finalized the interface
+	* new algorithms
+	* experimental wrapper support
+
+[2003-11-16] - CyFER 0.2.*
+	* grouped the algorithms
+	* started writing tests
+	

@@ -1,0 +1,19 @@
+top_builddir = ../../
+CC = @CC@
+LIBTOOL = @LIBTOOL@
+
+WARN = -W -Wall -Wmissing-declarations -Wmissing-prototypes -Werror
+CFLAGS = $(WARN) -I../../ -I../../include -D_REENTRANT @CFLAGS@
+
+OBJS = rsa.o elgamal.o luc.o dh.o pkiutil.o pk.o keyex.o
+
+.PHONY: all clean
+
+all:	$(OBJS)
+
+%.o: %.c
+	$(LIBTOOL) --mode=compile $(CC) $(CFLAGS) -c $< -o $@
+
+clean:
+	rm -rf *.o *.lo *~ .libs
+

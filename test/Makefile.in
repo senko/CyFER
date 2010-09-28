@@ -1,0 +1,23 @@
+top_builddir = ../
+LIBTOOL = @LIBTOOL@
+CC = @CC@
+INSTALL=@INSTALL@
+WARN = -Wall -Wmissing-declarations -Wmissing-prototypes -Werror
+CFLAGS = $(WARN) -I. -I../include @CFLAGS@
+LDFLAGS = -L../lib -lcyfer @LDFLAGS@
+
+OBJS = hashtest.o symtest.o asymtest.o test.o
+
+.PHONY: all clean
+
+all:	test
+
+test:	$(OBJS) $(DEPS)
+	$(LIBTOOL) $(CC) $(LDFLAGS) $(OBJS) -o $@
+
+%.o: %.c
+	$(CC) $(CFLAGS) -c $< -o $@
+
+clean:
+	rm -rf *.o test *~ .libs
+

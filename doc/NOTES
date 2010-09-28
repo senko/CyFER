@@ -1,0 +1,11 @@
+
+Some implementation notes:
+
+	* RC2 uses effective keylength of 64 bits
+	* DESX implementation uses 24-bit keys: K=(K1,K2,K3)
+		- K1 is pre-whitening, K3 is post-whitening key
+	* RC5 implementation is RC5-32/12/16
+	* RC6 implementation is RC6-32/20/16
+	* AES (Rijndael) uses 128-bit keys, 128-bit blocks, 10+1 rounds
+	* TripleDES is outer EDE
+

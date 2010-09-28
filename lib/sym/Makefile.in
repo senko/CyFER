@@ -1,0 +1,22 @@
+top_builddir = ../../
+CC = @CC@
+LIBTOOL = @LIBTOOL@
+
+WARN = -W -Wall -Wmissing-declarations -Wmissing-prototypes -Werror
+CFLAGS = $(WARN) -I../.. -I../../include -D_REENTRANT @CFLAGS@
+
+BCIPHERS = blowfish.o des.o desx.o rc2.o rc5.o rc6.o tripledes.o idea.o aes.o deal.o threeway.o 
+SCIPHERS = rc4.o
+HELPERS = cipher.o modes.o
+OBJS = $(BCIPHERS) $(SCIPHERS) $(HELPERS)
+
+.PHONY: all clean
+
+all:	$(OBJS)
+
+%.o: %.c
+	$(LIBTOOL) --mode=compile $(CC) $(CFLAGS) -c $< -o $@
+
+clean:
+	rm -rf *.o *.lo *~ .libs
+

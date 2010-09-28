@@ -1,0 +1,126 @@
+1. Installation using `configure' script
+2. Building the packages
+3. Windows installation
+4. If `configure' doesn't work
+
+
+1. Installation using `configure' script
+========================================
+
+1.1. Build configuration
+------------------------
+
+The `configure' script takes a number of optional arguments
+which can be used to tailor your particular build and
+installation:
+
+  --prefix      Installation root prefix (default is: /usr/local).
+	
+  --libdir      Where to put the libraries (default: {prefix}/lib)
+
+  --includedir	Where to put the header files (default: {prefix}/include)
+
+  --enable-64bit  Force build 64-bit library on systems where
+                  32bit library is the default.
+
+If you have some libraries in nonstandard places or need to pass extra
+options to the C compiler, you can set CFLAGS (C compiler flags) and
+LDFLAGS (linker flags) environment variables. An common example (using
+bash shell):
+
+	CFLAGS=-I/usr/local/include LDFLAGS=-L/usr/local/lib ./configure
+
+	
+1.1. Building the library
+-------------------------
+
+The build process uses GNU Make. If you have it installed on your system,
+it's probably under the name 'gmake' or simply 'make'. If you don't
+have GNU Make, you still may be able to build the library, using a slight
+workaround: See section 3 for instructions on how to build the library.
+
+The build process is:
+
+	1. Run `configure' with required parameters: ./configure ...
+	2. Build the library: gmake
+	3. Run self-check tests: gmake test
+
+
+1.2. Installing the library
+---------------------------
+
+To install the core library, run `gmake install'.
+
+Note to package builders: the library install target respects the environment
+variable DESTDIR which specifies the root directory for the install tree.
+For example, to "install" the software in the 'tree/' subdirectory, run:
+
+	DESTDIR=$PWD/tree gmake install
+
+
+
+2. Building the packages
+========================
+
+2.1. Slackware Linux
+--------------------
+
+After building, run `make slackpkg' which will create the
+package in the source tree root. Note that you should run
+this as root so that file ownership would be correctly
+set up.
+
+2.2. Debian GNU/Linux
+---------------------
+
+After building, run `make debpkg', which will create the
+package in the source tree root. Note that you should run
+this as root so that file ownership would be correctly set
+up.
+
+2.3. SuSe / RedHat / Fedora Core
+--------------------------------
+
+Use the spec located in spec/cyfer.spec to build the RPM
+package. Copy the source in your SRPMS directory and
+run `rpm -bb path/to/cyfer-0.6.0/spec/cyfer.spec'. The
+system will configure, build and package the library,
+and put it in your RPMS directory.
+
+
+
+3. Windows installation
+=======================
+
+To build the library on Windows, open win32/Cyfer/Cyfer.sln
+Visual Studio.NET 2003 (VS7.1) solution and build the
+library. Copy the library (and the used GMP library if you
+don't already have it installed) and the include files
+somewhere and reuse them in your projects
+
+The Cyfer library:
+	win32/Cyfer/libcyfer/Debug/libcyfer.dll
+	win32/Cyfer/libcyfer/Debug/libcyfer.lib
+
+The GNU MP library:
+	win32/gmp-4.1.2/lib/libgmp.dll
+	win32/gmp-4.1.2/lib/libgmp.lib
+
+
+
+4. If `configure' doesn't work or you don't have GNU Make
+=========================================================
+
+If for some reason you can't use the 'configure' script, you can try to build
+the library manually, using this:
+
+gcc -O2 -g -W -Wall -shared -Iinclude lib/*/*.c -o lib/libcyfer-0.5.0.so
+
+If you're on big-endian machine, add -DWORDS_BIGENDIAN to the above line.
+
+Then copy this file to apropriate directory (say, /usr/local/lib) and create
+'libcyfer.so' symbolic link to it in the same directory.
+
+The required include files are all located in include/cyfer directory, you
+can simply copy it to apropriate place (like /usr/local/include).
+

@@ -1,0 +1,18 @@
+CC = gcc
+WARN = -Wall -Wmissing-declarations -Wmissing-prototypes -Werror
+CFLAGS = $(WARN) -I/usr/local/include -g -O2
+LDFLAGS = -L/usr/local/include -lcyfer
+
+PROGS = hash bcipher scipher pk
+
+.PHONY: all clean
+
+all:	$(PROGS)
+
+%: %.c
+	$(CC) $(CFLAGS) $(LDFLAGS) $< -o $@
+
+clean:
+	rm -rf $(PROGS) .libs
+
+

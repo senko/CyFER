@@ -1,0 +1,187 @@
+1. Introduction
+2. Library organization overview
+3. Message digest algorithms
+4. Symmetrical block ciphers
+5. Symmetrical stream ciphers
+6. Public-key cryptography
+7. Key-agreement
+8. Code examples
+
+
+1. Introduction
+---------------
+
+	Cyfer is library of cryptographic functions which consists of
+several parts providing support for various areas of cryptographic
+algorithms:
+
+	- message digest algorithms (ie. hash algorithms)
+	- symmetric block and stream ciphers
+	- asymmetric cryptography (public-key ciphers, key agreement)
+
+	In each of these areas, a lot of algorithms were devised - some
+of them are practically a standard, some are used in particular
+situations, or are obsoleted and not in use anymore.
+
+	Cyfer implements a large number of these algorithms, both the
+widely used ones, and the obsoleted ones - the latter are includes
+for a historical reasons.
+
+	To achieve maximum flexibility and allow for easy upgrade, the
+library is designed in a modular way. Each implementation is a separate
+module without any (or, almost any) dependencies on other parts of the
+library. Such a module can even be physically separated from the rest
+of the code and used independently, for example in an embedded system.
+
+	The library is written to be as portable as possible, and has
+minimal architectural and platform dependance. It is known to work in
+Linux, FreeBSD and MS Windows on x86 architectures, and Solaris on SPARC
+(both as 32-bit and 64-bit library). It should work without any problems
+or minimal porting on all even remotely posix-compatible systems, with
+libgmp (GNU Multiple Precision) library as the only requirement - and if
+the public-key cryptography is not used, even that requirement dissapears.
+
+	Cyfer is a low-level library. It deals only with various
+algorithms, and completely avoids the problems of data representation.
+This is most evident in public-key sections - cyfer completely avoids
+the existing Public Key Infrastructure (PKI) standards. If you need
+this functionality, use the excellent and free OpenSSL, or some
+similar library.
+
+
+2. Library organization overview
+--------------------------------
+
+The library consists of three sections:
+	- hash (message digest algorithms)
+	- sym (symmetric block and stream ciphers)
+	- asym (public-key cryptography, key-agreement)
+
+	Each of these sections supports several algorithms via an unified
+interface. This interface is slightly different between sections (as
+these represent different functionality), but the overall API
+tries to be as consistent as possible. (Note: in the remainder of
+the text, the '<class>' represents various functionality classes
+offered by the library: Hash, BlockCipher, StreamCipher, Pk (public-key)
+and KeyEx (key-agreement)).
+
+In a nutshell, to work with any algorithm in Cyfer, you must do the
+following:
+
+	1. Identify the algorithm and its parameters, by:
+		a) using a predefined algorithm type constant, or
+		b) using a human-readable algorithm name, or
+		c) scanning through list of supported algorithms
+	2. Create algorithm context 
+	3. Use the algorithm
+	4. Destroy the context
+
+	The first (and most C-ish) way to select algorithm to use is to
+use one of predefined algorithm type constants (such as CYFER_HASH_MD5
+or CYFER_PK_RSA). After this, you must scan the supported algorithm
+list (returned by CYFER_<class>_Get_Supported) for algorithm parameters.
+
+	The second (and most flexible) way is to manually scan the
+supported algorithm list, select one of the algorithms and its parameters.
+Note that even if you use the third method (described below), you'll
+probably use this to generate a list of supported algorithms.
+
+	The easiest (and least C-ish) way is to use CYFER_<class>_Select
+function, which takes a human-readable algorithm-name (such as "MD5",
+"TripleDES" or "ElGamal") and returns algorithm type enum and
+algorithm parameters. 
+
+	After the algorithm has been identified, you must create and
+initialize its context, using one of CYFER_<class>_Init functions. After
+this, you use algorithm, and when the work is over, you must call
+CYFER_<class>_Finish to free all allocated resources and destroy the
+algorithm context.
+
+
+3. Message digest algorithms
+----------------------------
+
+	Message digest algorithms operate by updating the algorithm
+registers with the blocks of input text, and taking the value of these
+registers as the final value of the algorithm.
+
+	The CYFER_Hash_Update function is used to update the hash
+algorithm, and the CYFER_Hash_Finish function, besides context destruction,
+also returns the computed hash value.
+
+	Also available is a helper CYFER_Hash function, which encompasses
+algorithm initialization, update and finalizing, and is useful when
+processing short strings (ie. when all of the data is present in the
+memory). It is equivalent to:
+
+	int CYFER_Hash(int type, char *data, size_t len, char *md)
+	{
+		CYFER_HASH_CTX *ctx = CYFER_Hash_Init(type);
+		if (!ctx) return -1;
+
+		CYFER_Hash_Update(ctx, data, len);
+		CYFER_Hash_Finish(ctx, md);
+		return 0;
+	}
+
+
+4. Symmetrical block ciphers
+----------------------------
+
+	Since block ciphers can operate in several modes (ECB, CBC,
+CFB, OFB are supported by Cyfer), besides standard CYFER_BlockCipher_Select
+and CYFER_BlockCipher_Get_Supported functions, also present are
+CYFER_BlockCipher_SelectMode and CYFER_BlockCipher_Get_SupportedModes,
+which have analogous operation for block cipher modes of operation.
+
+	For encrypting and decrypting the data, Cyfer provides
+CYFER_BlockCipher_Encrypt and CYFER_BlockCipher_Decrypt functions.
+
+
+5. Symmetrical stream ciphers
+-----------------------------
+
+	For encrypting and decrypting the data, provided are the
+CYFER_StreamCipher_Encrypt and CYFER_StreamCipher_Decrypt functions.
+
+
+6. Public-key cryptography
+--------------------------
+
+	The supported key-manipulating functions are CYFER_Pk_Generate_Key
+(generates public/private key-pair), CYFER_Pk_Export_Key, CYFER_Pk_Import_Key
+(which export key to a data buffer and import from it, respectively) and
+CYFER_Pk_KeySize (which returns the required space for holding the keys).
+
+	Also available are CYFER_Pk_Encrypt and CYFER_Pk_Decrypt for
+data encryption and decryption, and CYFER_Pk_Sign and CYFER_Pk_Verify
+used for signing and verifying the signatures.
+
+	Note that, algthough PKI is avoided, the key formats are MPI
+so that they wouldn't need to be recoded if used with PKI.
+
+
+7. Key-agreement
+----------------
+
+	Key-agreement (or key-exchange, although these aren't exactly
+synonymous) interface in Cyfer is similar to that of public-key
+cryptography.
+
+	The CYFER_KeyEx_GenerateKey function generates the private and
+public key, CYFER_KeyEx_PublicKey returns the key which is to be sent
+to the other party, CYFER_KeyEx_ComputeKey uses the other party's key
+to compute the shared secret key, which is returned by CYFER_KeyEx_SharedKey.
+
+
+8. Code examples
+----------------
+
+	For a reallistic examples of Cyfer usage, look into the examples/
+directory, which contains fairly documented and readable code examples
+and cover hashes, symmetric ciphers and public-key cryptography.
+
+For additional examples, as well as key-agreement example (which isn't
+so reallistic because there's only one, schiscophrenic side :), take a
+look at test programs included in the source.
+

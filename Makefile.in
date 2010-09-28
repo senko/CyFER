@@ -1,0 +1,60 @@
+VERSION=@PACKAGE_VERSION@
+
+prefix=@prefix@
+exec_prefix=@exec_prefix@
+LIBDIR=@libdir@
+INCDIR=@includedir@/cyfer
+DOCDIR=@prefix@/doc/cyfer-$(VERSION)
+
+CC = @CC@
+INSTALL=@INSTALL@
+WARN = -W -Wall -Wmissing-declarations -Wmissing-prototypes -Werror
+CFLAGS = $(WARN) -I../include -I../../include @M64@ @CFLAGS@
+
+INSTALL_INCLUDES = include/cyfer/*.h
+
+SUBDIRS = lib test examples
+
+.PHONY: all clean distclean test install install_wrappers docs
+
+all: 
+	@for i in $(SUBDIRS); do $(MAKE) -C $$i all || break; done
+
+test: all
+	test/test
+
+install: all
+	$(INSTALL) -d $(DESTDIR)$(LIBDIR) $(DESTDIR)$(INCDIR) $(DESTDIR)$(DOCDIR)/examples
+	./libtool --mode=install $(INSTALL) -s -m 644 lib/libcyfer.la $(DESTDIR)$(LIBDIR)
+	$(INSTALL) -m 644 $(INSTALL_INCLUDES) $(DESTDIR)$(INCDIR)
+	$(INSTALL) -m 644 examples/*.c $(DESTDIR)$(DOCDIR)/examples
+	$(INSTALL) -m 644 examples/Makefile.installed $(DESTDIR)$(DOCDIR)/examples/Makefile
+	cp -R doc/* $(DESTDIR)$(DOCDIR)
+
+docs:
+	rm -rf doc/html
+	doxygen doc/Doxyfile
+
+clean:
+	@for i in $(SUBDIRS); do $(MAKE) -C $$i clean; done
+	rm -rf tree cyfer*.tgz cyfer*.deb cyfer*.rpm
+	
+distclean: clean
+	rm -f `find . -name Makefile`
+	rm -rf include/config.h config.log config.status libtool autom4te.cache
+
+slackpkg:
+	rm -rf tree
+	$(MAKE) install DESTDIR=$(PWD)/tree
+	(cd tree && makepkg -l y -c y ../cyfer-0.6.0-`uname -m`-1.tgz)
+	rm -rf tree
+
+debpkg:
+	rm -rf tree
+	$(MAKE) install DESTDIR=$(PWD)/tree
+	mkdir $(PWD)/tree/DEBIAN
+	sed "s/@ARCH@/`uname -m`/" < debian/control > tree/DEBIAN/control
+	dpkg -b tree
+	dpkg-name tree.deb
+	rm -rf tree
+

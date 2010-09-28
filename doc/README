@@ -1,0 +1,125 @@
+                    Cyfer - the cryptographic library
+                             version 0.6.0
+
+Introduction
+------------
+
+	Cyfer is a portable low-level cryptographic library providing several
+implementations of message digest, block and stream cipher and public-key
+algorithms. The library is extremely modular, providing easy way to add or
+modify algorithm implementations, or even separating the particular algorithm
+from the library physically (suitable for embedded environments).
+
+	Cyfer is a low-level library. It deals only with various
+algorithms, and completely avoids the problems of data representation.
+This is most evident in public-key sections - cyfer completely avoids
+the existing Public Key Infrastructure (PKI) standards. If you need
+this functionality, use the excellent and free OpenSSL, or some
+similar library.
+
+	The library design concept emphasises on simplicity and elegance (of
+both the algorithm implementations (if possible:) and the support library
+code), not maximizing performance or minimizing memory footprint. The algorithm
+implementations are straightforward, so they can be used for educational
+purposes.
+
+	Cyfer is portable to any platform with sane C development environment,
+the only requirement being the availability of the GNU MP (Multiple Precision
+arithmetic) library. As the GMP is used only for public-key cryptography, hash
+or symmetric cipher components should work everywhere.
+
+	The library is known to compile and run in Linux, FreeBSD, Solaris and
+Windows operating systems, on x86 (32-bit, little-endian) and sparc9 (64-bit,
+big-endian) architectures.
+
+
+Installation
+------------
+
+For detailed installation instructions see the file INSTALL.
+
+
+Documentation
+-------------
+
+	For an overview and a short guide on how to use the library, consult
+the UserGuide.txt file. This file doesn't contain code samples, so you'll
+want to look at doc/examples/ directory (which are fairly documented, don't
+worry :).
+
+	Also, a fully annotated complete library reference in HTML format,
+(generated using Doxygen) is provided.
+
+
+Features
+--------
+
+Hash algorithms:
+	Adler-32, CRC-32, MD2, MD4, MD5, RIPEMD-160, SHA-1, SHA-256, Snefru
+	
+Block ciphers:
+	AES, Blowfish, DEAL, DES, DESX, TripleDES, IDEA, RC2, RC5, RC6,
+	ThreeWay
+	
+Block cipher modes of operation:
+	ECB, CBC, CFB, OFB
+
+Stream ciphers:
+	RC4 (ArcFour)
+	
+Public-key cryptography:
+	ElGamal, LUC, RSA
+
+Key-exchange algorithms:
+	Diffie-Hellman
+
+
+Contributing
+------------
+
+If you've spare time and would like to contribute, here are the areas that
+need more work:
+
+        - new algorithms - If you need an algorithm which isn't supported,
+          just implement it and send the patch (but see below).
+
+        - test suites - There should be more tests for each supported
+          algorithm. It's easy to write the test: Compute or find the
+          known correct input/output pair for the algorithm, and include
+          it in the test program.
+
+        - documentation - There's no programmer's manual, and wrapper docs
+          are nonexistent. If you like to write documentation (does anyone?),
+          please do :)
+
+        - ports - I have no access to "exotic" (for me, anyways) platforms
+          and, although I've tried to make everything as portable as possible,
+          there's bound to be (hopefuly minor) problems when using Cyfer on
+          different platforms. If you managed to compile and run it on some
+          system not listed here, I'd be grateful to know of that (and of any
+          problems you encountered).
+
+        - bugfixes, bugreports - If you can fix it, great! If not, I'd
+          appreciate if you mail me with bug description, the environment
+          you're using, and sample code to reproduce the error.
+          
+        - Any suggestions, remarks and rants you might have are always
+          appreciated :)
+     
+
+	
+Author and Copyright
+--------------------
+
+	Author of Cyfer is Senko Rasic <senko@senko.net>. Suggestions, bug
+reports and any other feedback (to the above mail address) is welcomed
+and appriciated.
+
+	Cyfer is free software. You may use and/or distribute it under the
+terms of the BSD software license, see the file LICENSE for details.
+
+WARNING: Cyfer is provided with best intent to be useful and secure, but
+with no warranty; it is not heavily tested and may contain numerous severe
+bugs, flaws and holes - if security is your #1 goal, the wisest choice is
+to use tested, proven and certified cryptography implementation.
+

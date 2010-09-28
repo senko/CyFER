@@ -1,0 +1,21 @@
+top_builddir = ../
+LIBTOOL = @LIBTOOL@
+CC = @CC@
+INSTALL=@INSTALL@
+WARN = -Wall -Wmissing-declarations -Wmissing-prototypes -Werror
+CFLAGS = $(WARN) -I. -I../include @CFLAGS@
+LDFLAGS = -L../lib -lcyfer @LDFLAGS@ @LIBS@
+
+PROGS = hash bcipher scipher pk
+
+.PHONY: all clean
+
+all:	$(PROGS)
+
+%: %.c
+	$(LIBTOOL) $(CC) $(CFLAGS) $(LDFLAGS) $< -o $@
+
+clean:
+	rm -rf $(PROGS) .libs
+
+

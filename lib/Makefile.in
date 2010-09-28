@@ -1,0 +1,22 @@
+top_builddir = ../
+CC = @CC@
+LIBTOOL = @LIBTOOL@
+LIBDIR = @prefix@/lib
+LDFLAGS= @LDFLAGS@ -lgmp
+VERSION = @PACKAGE_VERSION@
+
+SUBDIRS = hash sym asym 
+OBJS = hash/*.lo sym/*.lo asym/*.lo
+
+.PHONY: all clean
+
+all:	libcyfer.la
+
+libcyfer.la: 
+	@for i in $(SUBDIRS); do $(MAKE) -C $$i all || break; done
+	$(LIBTOOL) --mode=link $(CC) -module -release $(VERSION) $(OBJS) -rpath $(LIBDIR) $(LDFLAGS) -o $@
+
+clean:
+	@for i in $(SUBDIRS); do $(MAKE) -C $$i clean; done
+	rm -rf *.a *.la *~ .libs
+
