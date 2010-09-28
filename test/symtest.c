@@ -1153,6 +1153,7 @@ void bmodes(int *nt, int *sc)
 
 	ok = 1;
 	for (i = 0; modes[i].name; i++) {
+		*nt = *nt + 1;
 		printf("Testing %s mode of operation ... ", modes[i].name);
 		l = (modes[i].length) ? modes[i].length : len;
 
