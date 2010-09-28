@@ -83,7 +83,7 @@ up.
 
 Use the spec located in spec/cyfer.spec to build the RPM
 package. Copy the source in your SRPMS directory and
-run `rpm -bb path/to/cyfer-0.6.0/spec/cyfer.spec'. The
+run `rpm -bb path/to/cyfer-0.6.1/spec/cyfer.spec'. The
 system will configure, build and package the library,
 and put it in your RPMS directory.
 

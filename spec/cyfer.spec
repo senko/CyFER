@@ -1,13 +1,13 @@
 Name: cyfer
 Summary: A low-level cryptographic library
-Version: 0.6.0
+Version: 0.6.1
 Release: 1
 Copyright: BSD
 Group: Development/Libraries
 Vendor: Senko Rasic
-Source: cyfer-0.6.0.tar.gz
+Source: cyfer-0.6.1.tar.gz
 Packager: Senko Rasic <senko@senko.net>
-URL: http://software.senko.net/
+URL: http://senko.net/
 BuildRoot: /tmp/cyfer-0.6.0-rpm-build
 Provides: libcyfer-0.6.0.so
 Requires: ld-linux.so.2 libc.so.6 libgmp.so.3 libc.so.6(GLIBC_2.0) libc.so.6(GLIBC_2.1.3)

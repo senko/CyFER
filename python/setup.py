@@ -44,7 +44,7 @@ keyex = Extension('cyfer.keyex',
                     sources = ['src/keyex.c'])
 
 setup (name = 'Cyfer',
-       version = '0.6.0',
+       version = '0.6.1',
        author = 'Senko Rasic',
        author_email = 'senko@senko.net',
        url = '',

@@ -2,7 +2,7 @@
 # Process this file with autoconf to produce a configure script.
 
 AC_PREREQ(2.57)
-AC_INIT(cyfer, 0.6.0, senko@senko.net)
+AC_INIT(cyfer, 0.6.1, senko@senko.net)
 AC_CONFIG_SRCDIR([examples/hash.c])
 AC_CONFIG_HEADER([include/config.h])
 

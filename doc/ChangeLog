@@ -1,3 +1,8 @@
+[2010-09-28] - Cyfer 0.6.1
+	* fixed signedness problems with newer gcc
+	* moved into git
+	* added python bindings directly to the main package
+
 [2004-09-26] - Cyfer 0.6.0
 	* moved wrappers to separate packages
 	* unbundled win32 support gmp library
